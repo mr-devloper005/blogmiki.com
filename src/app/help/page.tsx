@@ -6,16 +6,16 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { mockFaqs } from '@/data/mock-data'
 
 const topics = [
-  { title: 'Getting Started', description: 'Create your account and publish your first post.' },
-  { title: 'Bookmarks & Collections', description: 'Save links, organize folders, and share collections.' },
-  { title: 'Listings & Ads', description: 'Manage your business listings and classifieds.' },
+  { title: 'Getting Started', description: 'Create an account, set up your profile, and publish your first article.' },
+  { title: 'Writing & Publishing', description: 'Draft, preview, and publish long-form posts with clean formatting.' },
+  { title: 'Search & Discovery', description: 'Use categories and keywords to quickly find useful stories.' },
 ]
 
 export default function HelpPage() {
   return (
     <PageShell
       title="Help Center"
-      description="Find answers, guides, and best practices."
+      description="Answers, writing guides, and publishing best practices."
       actions={
         <Button asChild>
           <Link href="/contact">Contact Support</Link>
@@ -25,17 +25,17 @@ export default function HelpPage() {
       <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
         <div className="grid gap-6 md:grid-cols-2">
           {topics.map((topic) => (
-            <Card key={topic.title} className="border-border bg-card transition-transform hover:-translate-y-1">
+            <Card key={topic.title} className="border-slate-200 bg-white/95 transition-transform hover:-translate-y-1">
               <CardContent className="p-6">
-                <h2 className="text-lg font-semibold text-foreground">{topic.title}</h2>
-                <p className="mt-2 text-sm text-muted-foreground">{topic.description}</p>
+                <h2 className="text-lg font-semibold text-slate-900">{topic.title}</h2>
+                <p className="mt-2 text-sm text-slate-600">{topic.description}</p>
               </CardContent>
             </Card>
           ))}
         </div>
-        <Card className="border-border bg-card">
+        <Card className="border-slate-200 bg-white/95">
           <CardContent className="p-6">
-            <h3 className="text-lg font-semibold text-foreground">FAQ</h3>
+            <h3 className="text-lg font-semibold text-slate-900">FAQ</h3>
             <Accordion type="single" collapsible className="mt-4">
               {mockFaqs.map((faq) => (
                 <AccordionItem key={faq.id} value={faq.id}>

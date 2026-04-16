@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { FileText, Building2, LayoutGrid, Tag, Github, Twitter, Linkedin, Image as ImageIcon, User, ArrowRight, Sparkles } from 'lucide-react'
+import { FileText, Building2, LayoutGrid, Tag, Github, Twitter, Linkedin, Image as ImageIcon, User, ArrowRight } from 'lucide-react'
 import { SITE_CONFIG, type TaskKey } from '@/lib/site-config'
 import { siteContent } from '@/config/site.content'
 import { getFactoryState } from '@/design/factory/get-factory-state'
@@ -30,6 +30,7 @@ const footerLinks = {
     { name: 'Careers', href: '/careers' },
     { name: 'Blog', href: '/blog' },
     { name: 'Press', href: '/press' },
+    { name: 'Contact', href: '/contact' },
   ],
   resources: [
     { name: 'Help Center', href: '/help' },
@@ -140,33 +141,93 @@ export function Footer() {
 
   if (recipe.footer === 'editorial-footer') {
     return (
-      <footer className="border-t border-[#dbc6b6] bg-[linear-gradient(180deg,#fff9f0_0%,#fff1df_100%)] text-[#2f1d16]">
-        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-          <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr_0.9fr]">
+      <footer className="border-t border-slate-200 bg-white text-slate-900">
+        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+          <div className="grid gap-12 lg:grid-cols-[1.15fr_0.85fr_0.85fr_0.85fr_0.85fr]">
             <div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-[#dbc6b6] bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#72594a]">
-                <Sparkles className="h-3.5 w-3.5" />
-                Editorial desk
-              </div>
-              <h3 className="mt-5 text-3xl font-semibold tracking-[-0.04em]">{SITE_CONFIG.name}</h3>
-              <p className="mt-4 max-w-md text-sm leading-7 text-[#72594a]">{SITE_CONFIG.description}</p>
+              <Link href="/" className="inline-flex items-center gap-3">
+                <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 p-1">
+                  <img src="/favicon.png?v=20260401" alt={`${SITE_CONFIG.name} logo`} width="44" height="44" className="h-full w-full object-contain" />
+                </div>
+                <div>
+                  <span className="block text-lg font-semibold">{SITE_CONFIG.name}</span>
+                  <span className="text-xs uppercase tracking-[0.22em] text-slate-500">{siteContent.footer.tagline}</span>
+                </div>
+              </Link>
+              <p className="mt-5 max-w-sm text-sm leading-7 text-slate-600">{SITE_CONFIG.description}</p>
+              <p className="mt-6 text-sm text-slate-500">
+                Studio desk · Remote-friendly
+                <br />
+                hello@{SITE_CONFIG.domain.replace(/^www\./, '')}
+              </p>
             </div>
             <div>
-              <h4 className="text-xs font-semibold uppercase tracking-[0.24em] text-[#8b6d5a]">Sections</h4>
-              <ul className="mt-4 space-y-3 text-sm">
+              <h4 className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Sections</h4>
+              <ul className="mt-4 space-y-3 text-sm text-slate-700">
                 {footerLinks.platform.map((item: any) => (
-                  <li key={item.name}><Link href={item.href} className="hover:text-[#2f1d16]">{item.name}</Link></li>
+                  <li key={item.name}>
+                    <Link href={item.href} className="inline-flex items-center gap-2 hover:text-indigo-600">
+                      {item.icon ? <item.icon className="h-4 w-4 text-slate-400" /> : null}
+                      {item.name}
+                    </Link>
+                  </li>
                 ))}
               </ul>
             </div>
             <div>
-              <h4 className="text-xs font-semibold uppercase tracking-[0.24em] text-[#8b6d5a]">Company</h4>
-              <ul className="mt-4 space-y-3 text-sm">
+              <h4 className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Company</h4>
+              <ul className="mt-4 space-y-3 text-sm text-slate-700">
                 {footerLinks.company.map((item) => (
-                  <li key={item.name}><Link href={item.href} className="hover:text-[#2f1d16]">{item.name}</Link></li>
+                  <li key={item.name}>
+                    <Link href={item.href} className="hover:text-indigo-600">
+                      {item.name}
+                    </Link>
+                  </li>
                 ))}
               </ul>
             </div>
+            <div>
+              <h4 className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Resources</h4>
+              <ul className="mt-4 space-y-3 text-sm text-slate-700">
+                {footerLinks.resources.map((item) => (
+                  <li key={item.name}>
+                    <Link href={item.href} className="hover:text-indigo-600">
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Legal</h4>
+              <ul className="mt-4 space-y-3 text-sm text-slate-700">
+                {footerLinks.legal.map((item) => (
+                  <li key={item.name}>
+                    <Link href={item.href} className="hover:text-indigo-600">
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-slate-200 pt-8 text-sm text-slate-500 sm:flex-row">
+            <div className="flex gap-3">
+              {socialLinks.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-full border border-slate-200 p-2 text-slate-500 transition hover:border-indigo-200 hover:text-indigo-600"
+                >
+                  <item.icon className="h-4 w-4" />
+                </Link>
+              ))}
+            </div>
+            <p>
+              &copy; {new Date().getFullYear()} {SITE_CONFIG.name}. Crafted for readers.
+            </p>
           </div>
         </div>
       </footer>

@@ -2,75 +2,75 @@ import type { TaskKey } from '@/lib/site-config'
 
 export const siteContent = {
   navbar: {
-    tagline: 'Independent editorial publication',
+    tagline: 'Article studio · ideas in motion',
   },
   footer: {
-    tagline: 'Articles, features, and thoughtful publishing',
+    tagline: 'Long-form articles, product craft, and creative process',
   },
   hero: {
-    badge: 'Independent article journal',
-    title: ['Read essays, stories, and topic-led publishing in one place.'],
+    badge: 'Article-first studio',
+    title: ['Ideas, essays, and field notes', 'from a working creative team.'],
     description:
-      'A clean editorial platform built for article-led publishing, thoughtful reading, and discoverable long-form content.',
+      'A focused reading surface for design systems, product thinking, and the stories behind shipped work—built for calm scanning and deep dives.',
     primaryCta: {
-      label: 'Read the journal',
+      label: 'Open the journal',
       href: '/articles',
     },
     secondaryCta: {
-      label: 'Start browsing',
-      href: '/articles',
+      label: 'Search library',
+      href: '/search',
     },
-    searchPlaceholder: 'Search articles, features, guides, and editorials',
-    focusLabel: 'Focus',
-    featureCardBadge: 'latest cover rotation',
-    featureCardTitle: 'Latest posts shape the visual identity of the homepage.',
+    searchPlaceholder: 'Search articles, guides, and editorials',
+    focusLabel: 'Topics',
+    featureCardBadge: 'Fresh from the desk',
+    featureCardTitle: 'New writing shapes how the homepage feels each week.',
     featureCardDescription:
-      'Recent images and stories stay at the center of the experience without changing any core platform behavior.',
+      'Latest posts stay in the spotlight with generous imagery, clear tags, and a rhythm tuned for editorial browsing.',
   },
   home: {
     metadata: {
-      title: 'Stories, visuals, and discoverable content',
+      title: 'Articles, essays, and creative publishing',
       description:
-        'Explore articles, images, listings, and curated posts through a cleaner reading-first experience.',
-      openGraphTitle: 'Stories, visuals, and discoverable content',
+        'Read long-form articles on design, product, technology, and leadership—published with a modern editorial layout.',
+      openGraphTitle: 'Articles, essays, and creative publishing',
       openGraphDescription:
-        'Discover articles, visual posts, and connected content through a calmer reading-first experience.',
-      keywords: ['story platform', 'article site', 'visual content', 'content discovery'],
+        'Discover thoughtful articles and studio writing with strong typography, generous spacing, and a premium reading flow.',
+      keywords: ['articles', 'blog', 'editorial', 'design', 'product', 'technology', 'essays'],
     },
-    introBadge: 'About the platform',
-    introTitle: 'Built for reading, browsing, and connecting different kinds of content.',
+    introBadge: 'How we publish',
+    introTitle: 'Built for readers who still enjoy a well-set page.',
     introParagraphs: [
-      'This site brings together article-style reading, visual browsing, and structured discovery so visitors can move naturally between different content types.',
-      'Instead of separating stories, visuals, and supporting resources into disconnected surfaces, the platform keeps them connected in one place with consistent navigation and easier exploration.',
-      'Whether someone starts with a story, an image-led post, a listing, or a resource page, they can keep discovering related content without friction.',
+      'This homepage keeps articles at the center: large imagery, scannable headlines, and quiet supporting sections that never compete with the writing.',
+      'Sections are paced like a magazine—hero, fresh grid, deeper feature, and a clear invitation to subscribe or collaborate.',
+      'Motion stays light, typography leads, and every layout collapses cleanly on mobile without losing hierarchy.',
     ],
-    sideBadge: 'At a glance',
+    sideBadge: 'Signals',
     sidePoints: [
-      'Reading-first homepage with stronger emphasis on stories and imagery.',
-      'Connected sections for articles, visuals, listings, and supporting resources.',
-      'Cleaner browsing rhythm designed to make exploration feel easier.',
-      'Lightweight interactions that keep the experience fast and readable.',
+      'Editorial grid tuned for scanning titles, tags, and excerpts quickly.',
+      'Featured surfaces give longer stories room to breathe with imagery.',
+      'Search and categories stay one tap away for repeat visitors.',
+      'Performance-minded CSS, minimal JavaScript, and accessible contrast.',
     ],
     primaryLink: {
       label: 'Browse articles',
       href: '/articles',
     },
     secondaryLink: {
-      label: 'See visuals',
-      href: '/images',
+      label: 'Search',
+      href: '/search',
     },
   },
   cta: {
-    badge: 'Start exploring',
-    title: 'Explore articles, visuals, and resources through one connected experience.',
+    badge: 'Collaborate',
+    title: 'Bring your next article, launch story, or product narrative to the studio wall.',
     description:
-      'Move between articles, image-led posts, listings, and resources through one clearer and more connected visual system.',
+      'Whether you are pitching a guest essay or exploring sponsored deep-dives, we keep the conversation focused on great reading experiences.',
     primaryCta: {
-      label: 'Get Started Free',
+      label: 'Start free',
       href: '/register',
     },
     secondaryCta: {
-      label: 'Contact Sales',
+      label: 'Talk with us',
       href: '/contact',
     },
   },
@@ -130,13 +130,13 @@ export const taskIntroCopy: Record<
     title: 'Articles, stories, and long-form reading',
     paragraphs: [
       'This section is built for stories, explainers, guides, and long-form reading across topics and interests.',
-      'Articles connect with listings, images, resources, and other content types so deeper reading can lead naturally into related discovery.',
-      'Use this section to browse thoughtful posts, revisit useful writing, and move into supporting content when you want more context.',
+      'Typography, spacing, and imagery are tuned for comfortable reading sessions on every screen size.',
+      'Use categories to jump across themes, then search when you know exactly what you are looking for.',
     ],
     links: [
-      { label: 'Explore listings', href: '/listings' },
-      { label: 'Open images', href: '/images' },
-      { label: 'Browse resources', href: '/pdf' },
+      { label: 'Search library', href: '/search' },
+      { label: 'About', href: '/about' },
+      { label: 'Contact', href: '/contact' },
     ],
   },
   classified: {

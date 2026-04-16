@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { ArrowRight, Bookmark, Building2, Compass, FileText, Globe2, Image as ImageIcon, LayoutGrid, MapPin, ShieldCheck, Tag, User } from 'lucide-react'
+import Image from 'next/image'
+import { ArrowRight, Bookmark, Building2, Compass, FileText, Image as ImageIcon, LayoutGrid, MapPin, ShieldCheck, Tag, User, Zap } from 'lucide-react'
+import { HeroNewsletter } from '@/components/home/hero-newsletter'
 import { ContentImage } from '@/components/shared/content-image'
 import { NavbarShell } from '@/components/shared/navbar-shell'
 import { Footer } from '@/components/shared/footer'
@@ -39,6 +41,10 @@ const taskIcons: Record<TaskKey, any> = {
   classified: Tag,
   image: ImageIcon,
   profile: User,
+  social: LayoutGrid,
+  comment: FileText,
+  pdf: FileText,
+  org: Building2,
 }
 
 function resolveTaskKey(value: unknown, fallback: TaskKey): TaskKey {
@@ -96,19 +102,6 @@ function getDirectoryTone(brandPack: string) {
     badge: 'bg-slate-950 text-white',
     action: 'bg-slate-950 text-white hover:bg-slate-800',
     actionAlt: 'border border-slate-200 bg-white text-slate-950 hover:bg-slate-100',
-  }
-}
-
-function getEditorialTone() {
-  return {
-    shell: 'bg-[#fbf6ee] text-[#241711]',
-    panel: 'border border-[#dcc8b7] bg-[#fffdfa] shadow-[0_24px_60px_rgba(77,47,27,0.08)]',
-    soft: 'border border-[#e6d6c8] bg-[#fff4e8]',
-    muted: 'text-[#6e5547]',
-    title: 'text-[#241711]',
-    badge: 'bg-[#241711] text-[#fff1e2]',
-    action: 'bg-[#241711] text-[#fff1e2] hover:bg-[#3a241b]',
-    actionAlt: 'border border-[#dcc8b7] bg-transparent text-[#241711] hover:bg-[#f5e7d7]',
   }
 }
 
@@ -268,75 +261,165 @@ function DirectoryHome({ primaryTask, enabledTasks, listingPosts, classifiedPost
   )
 }
 
-function EditorialHome({ primaryTask, articlePosts, supportTasks }: { primaryTask?: EnabledTask; articlePosts: SitePost[]; supportTasks: EnabledTask[] }) {
-  const tone = getEditorialTone()
+function EditorialHome({ primaryTask, articlePosts }: { primaryTask?: EnabledTask; articlePosts: SitePost[] }) {
   const lead = articlePosts[0]
-  const side = articlePosts.slice(1, 5)
+  const gridPosts = articlePosts.slice(1, 9)
+  const spotlight = articlePosts[1] || lead
+  const topicRow = [
+    { label: 'All Topics', href: '/articles' },
+    { label: 'Design', href: '/articles?category=arts' },
+    { label: 'Product', href: '/articles?category=digital' },
+    { label: 'Development', href: '/articles?category=technology' },
+    { label: 'Leadership', href: '/articles?category=business' },
+    { label: 'Technology', href: '/articles?category=technology' },
+    { label: 'Interviews', href: '/articles?category=blog' },
+  ] as const
 
   return (
-    <main className={tone.shell}>
-      <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-18">
-        <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
-          <div>
-            <span className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] ${tone.badge}`}>
-              <FileText className="h-3.5 w-3.5" />
-              Reading-first publication
-            </span>
-            <h1 className={`mt-6 max-w-4xl text-5xl font-semibold tracking-[-0.06em] sm:text-6xl ${tone.title}`}>
-              Essays, analysis, and slower reading designed like a publication, not a dashboard.
-            </h1>
-            <p className={`mt-6 max-w-2xl text-base leading-8 ${tone.muted}`}>{SITE_CONFIG.description}</p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link href={primaryTask?.route || '/articles'} className={`inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold ${tone.action}`}>
-                Start reading
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link href="/about" className={`inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold ${tone.actionAlt}`}>
-                About the publication
-              </Link>
-            </div>
-          </div>
-
-          <aside className={`rounded-[2rem] p-6 ${tone.panel}`}>
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] opacity-70">Inside this issue</p>
-            <div className="mt-5 space-y-5">
-              {side.map((post) => (
-                <Link key={post.id} href={`/articles/${post.slug}`} className="block border-b border-black/10 pb-5 last:border-b-0 last:pb-0">
-                  <p className="text-sm font-semibold uppercase tracking-[0.18em] opacity-60">Feature</p>
-                  <h3 className="mt-2 text-xl font-semibold">{post.title}</h3>
-                  <p className={`mt-2 text-sm leading-7 ${tone.muted}`}>{post.summary || 'Long-form perspective with a calmer reading rhythm.'}</p>
-                </Link>
-              ))}
-            </div>
-          </aside>
+    <main className="bg-[#f3f4f6] text-slate-900">
+      <section className="relative overflow-hidden text-white">
+        {/* Hero cover image */}
+        <div className="pointer-events-none absolute inset-0">
+          <Image
+            src="/hero-cover.png"
+            alt=""
+            fill
+            priority
+            className="object-cover object-center"
+            sizes="100vw"
+          />
+          {/* Dark neutral scrim for text contrast — no colour tint, just darkness */}
+          <div className="absolute inset-0 bg-black/60" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20" />
         </div>
+        <div className="relative mx-auto max-w-7xl px-4 pb-12 pt-4 sm:px-6 sm:pb-14 sm:pt-6 lg:px-8 lg:pb-20 lg:pt-10">
+          <p className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/90">
+            <Zap className="h-4 w-4 text-white/90" aria-hidden />
+            {siteContent.hero.badge}
+          </p>
+          <h1 className="mt-4 max-w-4xl font-sans text-[2rem] font-bold leading-[1.05] tracking-tight text-white drop-shadow-md sm:mt-5 sm:text-5xl lg:text-[3.25rem]">
+            {SITE_CONFIG.name}{' '}
+            <span className="text-white/80">blog</span>
+          </h1>
+          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/85 sm:mt-6 sm:text-lg">{SITE_CONFIG.description}</p>
+          <HeroNewsletter />
+          <figure className="mt-8 max-w-3xl rounded-2xl border border-white/20 bg-black/45 p-4 text-sm leading-relaxed text-white/90 backdrop-blur-md sm:mt-12 sm:p-6 sm:text-base">
+            <blockquote>
+              “Knowledge is the wing wherewith we fly to heaven.” Stay curious, keep shipping, and write down what you learn—your future readers will thank you.
+            </blockquote>
+          </figure>
+        </div>
+      </section>
 
-        {lead ? (
-          <div className={`mt-12 overflow-hidden rounded-[2.5rem] ${tone.panel}`}>
-            <div className="grid lg:grid-cols-[1.05fr_0.95fr]">
-              <div className="relative min-h-[360px] overflow-hidden">
-                <ContentImage src={getPostImage(lead)} alt={lead.title} fill className="object-cover" />
-              </div>
-              <div className="p-8 lg:p-10">
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] opacity-70">Lead story</p>
-                <h2 className="mt-4 text-4xl font-semibold tracking-[-0.04em]">{lead.title}</h2>
-                <p className={`mt-4 text-sm leading-8 ${tone.muted}`}>{lead.summary || 'A more deliberate lead story surface with room for a proper narrative setup.'}</p>
-                <Link href={`/articles/${lead.slug}`} className={`mt-8 inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold ${tone.action}`}>
-                  Read article
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </div>
-            </div>
-          </div>
-        ) : null}
-
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {supportTasks.slice(0, 3).map((task) => (
-            <Link key={task.key} href={task.route} className={`rounded-[1.8rem] p-6 ${tone.soft}`}>
-              <h3 className="text-xl font-semibold">{task.label}</h3>
-              <p className={`mt-3 text-sm leading-7 ${tone.muted}`}>{task.description}</p>
+      <nav aria-label="Article topics" className="sticky top-16 z-30 border-b border-slate-200/90 bg-[#f3f4f6]/95 backdrop-blur-md sm:top-20">
+        <div className="mx-auto flex max-w-7xl items-center gap-3 overflow-x-auto px-4 py-2.5 [scrollbar-width:none] sm:gap-5 sm:px-6 sm:py-3.5 lg:px-8">
+          {topicRow.map((item) => (
+            <Link
+              key={item.label}
+              href={item.href}
+              className="shrink-0 rounded-full border border-transparent bg-white/70 px-3 py-1.5 text-xs font-semibold text-slate-600 transition hover:border-indigo-100 hover:text-indigo-700 sm:bg-transparent sm:px-0 sm:py-0 sm:text-sm"
+            >
+              {item.label}
             </Link>
           ))}
+        </div>
+      </nav>
+
+      <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+        <div className="flex flex-wrap items-end justify-between gap-4 border-b border-slate-200/80 pb-6">
+          <h2 className="text-xl font-bold tracking-tight text-slate-900 sm:text-3xl">New blog for you</h2>
+          <Link href={primaryTask?.route || '/articles'} className="inline-flex items-center gap-1 text-sm font-semibold text-indigo-600 transition hover:text-indigo-500">
+            View all blog
+            <ArrowRight className="h-4 w-4" aria-hidden />
+          </Link>
+        </div>
+        {gridPosts.length ? (
+          <div className="mt-7 grid gap-4 sm:mt-10 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {gridPosts.map((post) => (
+              <TaskPostCard key={post.id} post={post} href={`/articles/${post.slug}`} taskKey="article" />
+            ))}
+          </div>
+        ) : (
+          <div className="mt-10 rounded-2xl border border-dashed border-slate-300 bg-white/80 px-6 py-14 text-center text-sm text-slate-600">
+            Fresh articles will land here soon.{' '}
+            <Link href="/articles" className="font-semibold text-indigo-600 hover:underline">
+              Browse the archive
+            </Link>
+            .
+          </div>
+        )}
+      </section>
+
+      {lead ? (
+        <section className="border-y border-slate-200/90 bg-white">
+          <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+            <div className="overflow-hidden rounded-[1.75rem] border border-slate-200/80 bg-[#f8fafc] shadow-[0_24px_80px_rgba(15,23,42,0.06)]">
+              <div className="grid lg:grid-cols-[1.05fr_0.95fr]">
+                <div className="relative min-h-[220px] overflow-hidden sm:min-h-[300px] lg:min-h-[380px]">
+                  <ContentImage src={getPostImage(lead)} alt={lead.title} fill className="object-cover" />
+                </div>
+                <div className="flex flex-col justify-center p-5 sm:p-8 lg:p-12">
+                  <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Lead story</p>
+                  <h2 className="mt-3 font-sans text-2xl font-bold tracking-tight text-slate-900 sm:mt-4 sm:text-4xl">{lead.title}</h2>
+                  <p className="mt-3 text-sm leading-relaxed text-slate-600 sm:mt-4 sm:text-base">{lead.summary || 'A longer feature with space for context, process, and takeaways.'}</p>
+                  <div className="mt-6 flex flex-wrap gap-2">
+                    <span className="rounded-full bg-slate-900 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-white">Live project</span>
+                    <span className="rounded-full bg-slate-200/80 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-slate-700">UI/UX</span>
+                    <span className="rounded-full bg-slate-200/80 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-slate-700">12 min read</span>
+                  </div>
+                  <Link
+                    href={`/articles/${lead.slug}`}
+                    className="mt-6 inline-flex w-fit items-center gap-2 rounded-full bg-indigo-600 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-500 sm:mt-8"
+                  >
+                    Read article
+                    <ArrowRight className="h-4 w-4" aria-hidden />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      {spotlight ? (
+        <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-16 lg:px-8">
+          <div className="grid gap-7 overflow-hidden rounded-[1.75rem] bg-[#eef0f5] p-5 sm:gap-10 sm:p-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:p-12">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Why it matters</p>
+              <h2 className="mt-3 font-sans text-2xl font-bold tracking-tight text-slate-900 sm:mt-4 sm:text-4xl">Why product design teams should learn motion</h2>
+              <p className="mt-5 max-w-xl text-sm leading-relaxed text-slate-600 sm:text-base">
+                Motion clarifies hierarchy, guides attention, and makes interfaces feel considerate. When writing about product craft, we treat motion as part of the story—not an afterthought.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-2">
+                <span className="rounded-full bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-slate-700 shadow-sm">Case study</span>
+                <span className="rounded-full bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-slate-700 shadow-sm">Product</span>
+                <span className="rounded-full bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-slate-700 shadow-sm">8 min read</span>
+              </div>
+              <Link href={`/articles/${spotlight.slug}`} className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-indigo-700 hover:text-indigo-600">
+                Read case study
+                <ArrowRight className="h-4 w-4" aria-hidden />
+              </Link>
+            </div>
+            <div className="relative min-h-[220px] overflow-hidden rounded-2xl border border-slate-200/80 bg-gradient-to-br from-indigo-200/60 via-white to-slate-100 shadow-inner sm:min-h-[260px] lg:min-h-[320px]">
+              <ContentImage src={getPostImage(spotlight)} alt={spotlight.title} fill className="object-cover mix-blend-multiply" />
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      <section className="mx-auto max-w-7xl px-4 pb-14 sm:px-6 sm:pb-20 lg:px-8">
+        <div className="rounded-[1.75rem] bg-[#4f46e5] px-5 py-8 text-center text-white shadow-[0_28px_80px_rgba(79,70,229,0.35)] sm:px-12 sm:py-12">
+          <h2 className="font-sans text-2xl font-bold tracking-tight sm:text-4xl">Rush your next idea with us</h2>
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-indigo-100 sm:text-base">
+            Pitch a story, sponsor a deep-dive, or collaborate on a limited series. We keep the process lightweight and the output reader-grade.
+          </p>
+          <Link
+            href="/contact"
+            className="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-indigo-700 shadow-sm transition hover:bg-indigo-50 sm:mt-8 sm:px-8 sm:py-3.5"
+          >
+            Let&apos;s make it
+            <ArrowRight className="h-4 w-4" aria-hidden />
+          </Link>
         </div>
       </section>
     </main>
@@ -490,7 +573,6 @@ export default async function HomePage() {
   ).filter(({ posts }) => posts.length)
 
   const primaryTask = enabledTasks.find((task) => task.key === recipe.primaryTask) || enabledTasks[0]
-  const supportTasks = enabledTasks.filter((task) => task.key !== primaryTask?.key)
   const listingPosts = taskFeed.find(({ task }) => task.key === 'listing')?.posts || []
   const classifiedPosts = taskFeed.find(({ task }) => task.key === 'classified')?.posts || []
   const articlePosts = taskFeed.find(({ task }) => task.key === 'article')?.posts || []
@@ -535,7 +617,7 @@ export default async function HomePage() {
         />
       ) : null}
       {productKind === 'editorial' ? (
-        <EditorialHome primaryTask={primaryTask} articlePosts={articlePosts} supportTasks={supportTasks} />
+        <EditorialHome primaryTask={primaryTask} articlePosts={articlePosts} />
       ) : null}
       {productKind === 'visual' ? (
         <VisualHome primaryTask={primaryTask} imagePosts={imagePosts} profilePosts={profilePosts} articlePosts={articlePosts} />
