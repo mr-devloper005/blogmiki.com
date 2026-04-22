@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import { useRef, useState } from "react"
 import { useRouter } from "next/navigation"
@@ -176,10 +176,8 @@ export default function NewArticlePage() {
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" asChild>
-              <Link href="/dashboard">
-                <ArrowLeft className="h-5 w-5" />
-              </Link>
+            <Button variant="ghost" size="icon" onClick={() => router.back()}>
+              <ArrowLeft className="h-5 w-5" />
             </Button>
             <div>
               <h1 className="text-2xl font-bold text-foreground">New Article</h1>

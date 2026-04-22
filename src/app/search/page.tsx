@@ -73,11 +73,7 @@ export default async function SearchPage({
   return (
     <PageShell
       title="Search"
-      description={
-        query
-          ? `Results for "${query}"`
-          : "Browse the latest posts across every task."
-      }
+      description={query ? `Results for "${query}"` : 'Search articles and long-form posts across the library.'}
       actions={
         <form action="/search" className="flex w-full gap-2 sm:w-auto">
           <input type="hidden" name="master" value="1" />
@@ -88,11 +84,11 @@ export default async function SearchPage({
             <Input
               name="q"
               defaultValue={query}
-              placeholder="Search across tasks..."
-              className="h-11 pl-9"
+              placeholder="Search articles, topics, authors…"
+              className="h-11 border-white/25 bg-white/10 pl-9 text-white placeholder:text-indigo-100/75"
             />
           </div>
-          <Button type="submit" className="h-11">
+          <Button type="submit" className="h-11 bg-white font-semibold text-indigo-700 hover:bg-indigo-50">
             Search
           </Button>
         </form>
