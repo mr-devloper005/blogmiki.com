@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import type { ReactNode } from 'react'
 import { NavbarShell } from '@/components/shared/navbar-shell'
@@ -19,22 +19,18 @@ export function PageShell({
     <div className="min-h-screen bg-background">
       <NavbarShell />
       <main>
-        <section className="border-b border-border bg-secondary/30">
-          <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+        <section className="border-b border-slate-200/80 bg-gradient-to-br from-indigo-600 via-indigo-600 to-indigo-700 text-white">
+          <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
             <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <h1 className="text-3xl font-bold text-foreground">{title}</h1>
-                {description && (
-                  <p className="mt-2 max-w-2xl text-muted-foreground">{description}</p>
-                )}
+                <h1 className="font-sans text-3xl font-bold tracking-tight sm:text-4xl">{title}</h1>
+                {description && <p className="mt-3 max-w-2xl text-sm leading-relaxed text-indigo-100 sm:text-base">{description}</p>}
               </div>
-              {actions && <div className="flex flex-wrap gap-3">{actions}</div>}
+              {actions && <div className="flex flex-wrap gap-3 [&_input]:border-white/20 [&_input]:bg-white/10 [&_input]:text-white [&_input]:placeholder:text-indigo-100/70">{actions}</div>}
             </div>
           </div>
         </section>
-        <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-          {children}
-        </section>
+        <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">{children}</section>
       </main>
       <Footer />
     </div>

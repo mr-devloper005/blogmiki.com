@@ -9,37 +9,37 @@ import { CONTACT_PAGE_OVERRIDE_ENABLED, ContactPageOverride } from '@/overrides/
 function getTone(kind: ReturnType<typeof getProductKind>) {
   if (kind === 'directory') {
     return {
-      shell: 'bg-[#f8fbff] text-slate-950',
-      panel: 'border border-slate-200 bg-white',
-      soft: 'border border-slate-200 bg-slate-50',
+      shell: 'bg-[#f3f4f6] text-slate-900',
+      panel: 'border border-slate-200 bg-white/95 shadow-[0_20px_45px_rgba(15,23,42,0.06)]',
+      soft: 'border border-slate-200 bg-white/90',
       muted: 'text-slate-600',
-      action: 'bg-slate-950 text-white hover:bg-slate-800',
+      action: 'bg-indigo-600 text-white hover:bg-indigo-500',
     }
   }
   if (kind === 'editorial') {
     return {
-      shell: 'bg-[#fbf6ee] text-[#241711]',
-      panel: 'border border-[#dcc8b7] bg-[#fffdfa]',
-      soft: 'border border-[#e6d6c8] bg-[#fff4e8]',
-      muted: 'text-[#6e5547]',
-      action: 'bg-[#241711] text-[#fff1e2] hover:bg-[#3a241b]',
+      shell: 'bg-[#f3f4f6] text-slate-900',
+      panel: 'border border-slate-200 bg-white/95 shadow-[0_20px_45px_rgba(15,23,42,0.06)]',
+      soft: 'border border-slate-200 bg-white/90',
+      muted: 'text-slate-600',
+      action: 'bg-indigo-600 text-white hover:bg-indigo-500',
     }
   }
   if (kind === 'visual') {
     return {
-      shell: 'bg-[#07101f] text-white',
-      panel: 'border border-white/10 bg-white/6',
-      soft: 'border border-white/10 bg-white/5',
-      muted: 'text-slate-300',
-      action: 'bg-[#8df0c8] text-[#07111f] hover:bg-[#77dfb8]',
+      shell: 'bg-[#f3f4f6] text-slate-900',
+      panel: 'border border-slate-200 bg-white/95 shadow-[0_20px_45px_rgba(15,23,42,0.06)]',
+      soft: 'border border-slate-200 bg-white/90',
+      muted: 'text-slate-600',
+      action: 'bg-indigo-600 text-white hover:bg-indigo-500',
     }
   }
   return {
-    shell: 'bg-[#f7f1ea] text-[#261811]',
-    panel: 'border border-[#ddcdbd] bg-[#fffaf4]',
-    soft: 'border border-[#e8dbce] bg-[#f3e8db]',
-    muted: 'text-[#71574a]',
-    action: 'bg-[#5b2b3b] text-[#fff0f5] hover:bg-[#74364b]',
+    shell: 'bg-[#f3f4f6] text-slate-900',
+    panel: 'border border-slate-200 bg-white/95 shadow-[0_20px_45px_rgba(15,23,42,0.06)]',
+    soft: 'border border-slate-200 bg-white/90',
+    muted: 'text-slate-600',
+    action: 'bg-indigo-600 text-white hover:bg-indigo-500',
   }
 }
 
@@ -79,30 +79,30 @@ export default function ContactPage() {
   return (
     <div className={`min-h-screen ${tone.shell}`}>
       <NavbarShell />
-      <main className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+      <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-14 lg:px-8">
         <section className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] opacity-70">Contact {SITE_CONFIG.name}</p>
-            <h1 className="mt-4 text-5xl font-semibold tracking-[-0.05em]">A support page that matches the product, not a generic contact form.</h1>
-            <p className={`mt-5 max-w-2xl text-sm leading-8 ${tone.muted}`}>Tell us what you are trying to publish, fix, or launch. We will route it through the right lane instead of forcing every request into the same support bucket.</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-indigo-600">Contact {SITE_CONFIG.name}</p>
+            <h1 className="mt-4 text-3xl font-bold tracking-tight sm:text-5xl">A faster support lane for writers and readers.</h1>
+            <p className={`mt-5 max-w-2xl text-sm leading-7 sm:text-base ${tone.muted}`}>Tell us what you are trying to publish, fix, or launch. We route requests to the right team so you get focused help without generic responses.</p>
             <div className="mt-8 space-y-4">
               {lanes.map((lane) => (
-                <div key={lane.title} className={`rounded-[1.6rem] p-5 ${tone.soft}`}>
-                  <lane.icon className="h-5 w-5" />
-                  <h2 className="mt-3 text-xl font-semibold">{lane.title}</h2>
+                <div key={lane.title} className={`rounded-2xl p-5 sm:p-6 ${tone.soft}`}>
+                  <lane.icon className="h-5 w-5 text-indigo-600" />
+                  <h2 className="mt-3 text-xl font-semibold text-slate-900">{lane.title}</h2>
                   <p className={`mt-2 text-sm leading-7 ${tone.muted}`}>{lane.body}</p>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className={`rounded-[2rem] p-7 ${tone.panel}`}>
-            <h2 className="text-2xl font-semibold">Send a message</h2>
+          <div className={`rounded-[1.75rem] p-6 sm:p-7 ${tone.panel}`}>
+            <h2 className="text-2xl font-semibold text-slate-900">Send a message</h2>
             <form className="mt-6 grid gap-4">
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="Your name" />
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="Email address" />
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="What do you need help with?" />
-              <textarea className="min-h-[180px] rounded-2xl border border-current/10 bg-transparent px-4 py-3 text-sm" placeholder="Share the full context so we can respond with the right next step." />
+              <input className="h-12 rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-900 placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300" placeholder="Your name" />
+              <input className="h-12 rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-900 placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300" placeholder="Email address" />
+              <input className="h-12 rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-900 placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300" placeholder="What do you need help with?" />
+              <textarea className="min-h-[180px] rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300" placeholder="Share the full context so we can respond with the right next step." />
               <button type="submit" className={`inline-flex h-12 items-center justify-center rounded-full px-6 text-sm font-semibold ${tone.action}`}>Send message</button>
             </form>
           </div>
