@@ -167,7 +167,7 @@ export async function TaskDetailPage({ task, slug }: { task: TaskKey; slug: stri
   const images = getImageUrls(post, content);
   const mapEmbedUrl = buildMapEmbedUrl(content.latitude, content.longitude, location);
   const isBookmark = task === "sbm" || task === "social";
-  const hideSidebar = isClassified || isArticle || task === "image" || isBookmark;
+  const hideSidebar = isClassified || task === "image" || isBookmark;
   const related = (await fetchTaskPosts(task, 6))
     .filter((item) => item.slug !== post.slug)
     .filter((item) => {
@@ -273,7 +273,6 @@ export async function TaskDetailPage({ task, slug }: { task: TaskKey; slug: stri
                 </h1>
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
                   <span>By {articleAuthor}</span>
-                  {articleDate ? <span>{articleDate}</span> : null}
                   <Badge variant="secondary" className="inline-flex items-center gap-1">
                     <Tag className="h-3.5 w-3.5" />
                     {category}
@@ -408,73 +407,143 @@ export async function TaskDetailPage({ task, slug }: { task: TaskKey; slug: stri
 
           {!hideSidebar ? (
             <aside className="space-y-6">
-            <div className="rounded-2xl border border-border bg-card p-6">
-              <h2 className="text-lg font-semibold text-foreground">Listing details</h2>
-                <div className="mt-4 space-y-3 text-sm text-muted-foreground">
-                  {content.website && (
-                    <div className="flex items-start gap-2">
-                      <Globe className="mt-0.5 h-4 w-4" />
-                      <a
-                        href={content.website}
-                        className="break-all text-foreground hover:underline"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        {content.website}
-                      </a>
+              {isArticle ? (
+                // Article sidebar with related content
+                <>
+                  {related.length ? (
+                    <div className="rounded-2xl border border-border bg-card p-6">
+                      <div className="mb-4 flex items-center justify-between">
+                        <h2 className="text-lg font-semibold text-foreground">
+                          More in {category}
+                        </h2>
+                        {taskConfig?.route && (
+                          <Link
+                            href={taskConfig.route}
+                            className="text-sm text-muted-foreground hover:text-foreground"
+                          >
+                            View all
+                          </Link>
+                        )}
+                      </div>
+                      <div className="space-y-4">
+                        {related.map((item) => (
+                          <TaskPostCard
+                            key={item.id}
+                            post={item}
+                            href={buildPostUrl(task, item.slug)}
+                            compact={true}
+                          />
+                        ))}
+                      </div>
                     </div>
-                  )}
-                  {content.phone && (
-                    <div className="flex items-start gap-2">
-                      <Phone className="mt-0.5 h-4 w-4" />
-                      <span>{content.phone}</span>
+                  ) : null}
+                  
+                  <nav className="rounded-2xl border border-border bg-card/60 p-4">
+                    <p className="text-sm font-semibold text-foreground">Related links</p>
+                    <ul className="mt-2 space-y-2 text-sm">
+                      {related.map((item) => (
+                        <li key={`link-${item.id}`}>
+                          <Link
+                            href={buildPostUrl(task, item.slug)}
+                            className="text-primary underline-offset-4 hover:underline"
+                          >
+                            {item.title}
+                          </Link>
+                        </li>
+                      ))}
+                      {taskConfig?.route ? (
+                        <li>
+                          <Link
+                            href={taskConfig.route}
+                            className="text-primary underline-offset-4 hover:underline"
+                          >
+                            Browse all {taskConfig.label}
+                          </Link>
+                        </li>
+                      ) : null}
+                      <li>
+                        <Link
+                          href={`/search?q=${encodeURIComponent(category)}`}
+                          className="text-primary underline-offset-4 hover:underline"
+                        >
+                          Search more in {category}
+                        </Link>
+                      </li>
+                    </ul>
+                  </nav>
+                </>
+              ) : (
+                // Non-article sidebar with listing details
+                <>
+                  <div className="rounded-2xl border border-border bg-card p-6">
+                    <h2 className="text-lg font-semibold text-foreground">Listing details</h2>
+                    <div className="mt-4 space-y-3 text-sm text-muted-foreground">
+                      {content.website && (
+                        <div className="flex items-start gap-2">
+                          <Globe className="mt-0.5 h-4 w-4" />
+                          <a
+                            href={content.website}
+                            className="break-all text-foreground hover:underline"
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            {content.website}
+                          </a>
+                        </div>
+                      )}
+                      {content.phone && (
+                        <div className="flex items-start gap-2">
+                          <Phone className="mt-0.5 h-4 w-4" />
+                          <span>{content.phone}</span>
+                        </div>
+                      )}
+                      {content.email && (
+                        <div className="flex items-start gap-2">
+                          <Mail className="mt-0.5 h-4 w-4" />
+                          <a
+                            href={`mailto:${content.email}`}
+                            className="break-all text-foreground hover:underline"
+                          >
+                            {content.email}
+                          </a>
+                        </div>
+                      )}
+                      {location && (
+                        <div className="flex items-start gap-2">
+                          <MapPin className="mt-0.5 h-4 w-4" />
+                          <span>{location}</span>
+                        </div>
+                      )}
                     </div>
-                  )}
-                  {content.email && (
-                    <div className="flex items-start gap-2">
-                      <Mail className="mt-0.5 h-4 w-4" />
-                      <a
-                        href={`mailto:${content.email}`}
-                        className="break-all text-foreground hover:underline"
-                      >
-                        {content.email}
-                      </a>
-                    </div>
-                  )}
-                  {location && (
-                    <div className="flex items-start gap-2">
-                      <MapPin className="mt-0.5 h-4 w-4" />
-                      <span>{location}</span>
-                    </div>
-                  )}
-                </div>
-              {content.website ? (
-                <Button className="mt-5 w-full" asChild>
-                  <a href={content.website} target="_blank" rel="noreferrer">
-                    Visit Website
-                  </a>
-                </Button>
-              ) : null}
-            </div>
+                    {content.website ? (
+                      <Button className="mt-5 w-full" asChild>
+                        <a href={content.website} target="_blank" rel="noreferrer">
+                          Visit Website
+                        </a>
+                      </Button>
+                    ) : null}
+                  </div>
 
-            {mapEmbedUrl ? (
-              <div className="rounded-2xl border border-border bg-card p-4">
-                <p className="text-sm font-semibold text-foreground">Location map</p>
-                <div className="mt-4 overflow-hidden rounded-xl border border-border">
-                  <iframe
-                    title="Business location map"
-                    src={mapEmbedUrl}
-                    className="h-56 w-full"
-                    loading="lazy"
-                  />
-                </div>
-              </div>
-            ) : null}
-
-          </aside>
+                  {mapEmbedUrl ? (
+                    <div className="rounded-2xl border border-border bg-card p-4">
+                      <p className="text-sm font-semibold text-foreground">Location map</p>
+                      <div className="mt-4 overflow-hidden rounded-xl border border-border">
+                        <iframe
+                          title="Business location map"
+                          src={mapEmbedUrl}
+                          className="h-56 w-full"
+                          loading="lazy"
+                        />
+                      </div>
+                    </div>
+                  ) : null}
+                </>
+              )}
+            </aside>
           ) : null}
         </div>
 
+        {!isArticle && (
         <section className="mt-12">
           {related.length ? (
             <>
@@ -536,6 +605,7 @@ export async function TaskDetailPage({ task, slug }: { task: TaskKey; slug: stri
             </ul>
           </nav>
         </section>
+      )}
       </main>
       <Footer />
     </div>
