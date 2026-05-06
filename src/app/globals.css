@@ -71,9 +71,9 @@
 }
 
 @theme inline {
-  --font-sans: var(--font-manrope), system-ui, sans-serif;
+  --font-sans: var(--font-roboto-slab), ui-serif, Georgia, serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
-  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-display: var(--font-roboto-slab), ui-serif, Georgia, serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -157,7 +157,10 @@
   li,
   input,
   button,
-  textarea {
+  textarea,
+  span,
+  div,
+  a {
     font-family: var(--font-sans);
   }
 
@@ -355,14 +358,14 @@ body[data-site-shell="market"] {
 .factory-font-market h2,
 .factory-font-market h3,
 .factory-font-market h4 {
-  font-family: var(--font-sans);
+  font-family: var(--font-display);
 }
 
 .factory-font-studio h1,
 .factory-font-studio h2,
 .factory-font-studio h3,
 .factory-font-studio h4 {
-  font-family: var(--font-sans);
+  font-family: var(--font-display);
   letter-spacing: -0.05em;
 }
 

@@ -105,6 +105,17 @@ export default function ContactPage() {
               <textarea className="min-h-[180px] rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300" placeholder="Share the full context so we can respond with the right next step." />
               <button type="submit" className={`inline-flex h-12 items-center justify-center rounded-full px-6 text-sm font-semibold ${tone.action}`}>Send message</button>
             </form>
+            
+            <div className="mt-6 pt-6 border-t border-slate-200">
+              <p className="text-sm font-medium text-slate-900 mb-3">Or email us directly:</p>
+              <a 
+                href={`mailto:${process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'contact@blogmiki.com'}`}
+                className={`inline-flex h-12 items-center justify-center rounded-full px-6 text-sm font-semibold ${tone.action} hover:opacity-90 transition-opacity`}
+              >
+                <Mail className="h-4 w-4 mr-2" />
+                Email Us
+              </a>
+            </div>
           </div>
         </section>
       </main>
