@@ -9,7 +9,6 @@ import { Button } from '@/components/ui/button'
 import { useAuth } from '@/lib/auth-context'
 import { SITE_CONFIG, type TaskKey } from '@/lib/site-config'
 import { cn } from '@/lib/utils'
-import { siteContent } from '@/config/site.content'
 import { getFactoryState } from '@/design/factory/get-factory-state'
 import { NAVBAR_OVERRIDE_ENABLED, NavbarOverride } from '@/overrides/navbar'
 
@@ -115,12 +114,11 @@ export function Navbar() {
         <nav className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
           <div className="flex min-w-0 items-center gap-4">
             <Link href="/" className="flex shrink-0 items-center gap-3">
-              <div className={cn('flex h-12 w-12 items-center justify-center overflow-hidden p-1.5', palette.logo)}>
-                <img src="/favicon.png?v=20260401" alt={`${SITE_CONFIG.name} logo`} width="48" height="48" className="h-full w-full object-contain" />
+              <div className="flex h-12 w-12 items-center justify-center overflow-hidden p-1.5">
+                <img src="/brandmark.png" alt={`${SITE_CONFIG.name} logo`} width="48" height="48" className="h-full w-full object-contain" />
               </div>
               <div className="min-w-0 hidden sm:block">
                 <span className="block truncate text-xl font-semibold">{SITE_CONFIG.name}</span>
-                <span className="block text-[10px] uppercase tracking-[0.24em] opacity-60">{siteContent.navbar.tagline}</span>
               </div>
             </Link>
 
@@ -220,22 +218,13 @@ export function Navbar() {
             <div
               className={cn(
                 'flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden p-1.5',
-                style.logo,
                 isEditorialHome && 'border-white/25 bg-white/10 shadow-none',
               )}
             >
-              <img src="/favicon.png?v=20260401" alt={`${SITE_CONFIG.name} logo`} width="48" height="48" className="h-full w-full object-contain" />
+              <img src="/brandmark.png" alt={`${SITE_CONFIG.name} logo`} width="48" height="48" className="h-full w-full object-contain" />
             </div>
             <div className="min-w-0 hidden sm:block">
               <span className={cn('block truncate text-xl font-semibold', isEditorialHome && 'text-white')}>{SITE_CONFIG.name}</span>
-              <span
-                className={cn(
-                  'hidden text-[10px] uppercase tracking-[0.28em] opacity-70 sm:block',
-                  isEditorialHome && 'text-indigo-100/90',
-                )}
-              >
-                {siteContent.navbar.tagline}
-              </span>
             </div>
           </Link>
 
