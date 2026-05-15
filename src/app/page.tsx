@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowRight, Bookmark, Building2, Compass, FileText, Image as ImageIcon, LayoutGrid, MapPin, ShieldCheck, Tag, User, Zap } from 'lucide-react'
+import { ArrowRight, Bookmark, Building2, Compass, FileText, Image as ImageIcon, LayoutGrid, MapPin, ShieldCheck, Tag, User } from 'lucide-react'
 import { HeroNewsletter } from '@/components/home/hero-newsletter'
 import { ContentImage } from '@/components/shared/content-image'
 import { NavbarShell } from '@/components/shared/navbar-shell'
@@ -265,16 +265,6 @@ function EditorialHome({ primaryTask, articlePosts }: { primaryTask?: EnabledTas
   const lead = articlePosts[0]
   const gridPosts = articlePosts.slice(1, 9)
   const spotlight = articlePosts[1] || lead
-  const topicRow = [
-    { label: 'All Topics', href: '/articles' },
-    { label: 'Design', href: '/articles?category=arts' },
-    { label: 'Product', href: '/articles?category=digital' },
-    { label: 'Development', href: '/articles?category=technology' },
-    { label: 'Leadership', href: '/articles?category=business' },
-    { label: 'Technology', href: '/articles?category=technology' },
-    { label: 'Interviews', href: '/articles?category=blog' },
-  ] as const
-
   return (
     <main className="bg-[#f3f4f6] text-slate-900">
       <section className="relative overflow-hidden text-white">
@@ -293,10 +283,6 @@ function EditorialHome({ primaryTask, articlePosts }: { primaryTask?: EnabledTas
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20" />
         </div>
         <div className="relative mx-auto max-w-7xl px-4 pb-12 pt-4 sm:px-6 sm:pb-14 sm:pt-6 lg:px-8 lg:pb-20 lg:pt-10">
-          <p className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/90">
-            <Zap className="h-4 w-4 text-white/90" aria-hidden />
-            {siteContent.hero.badge}
-          </p>
           <h1 className="mt-4 max-w-4xl font-sans text-[2rem] font-bold leading-[1.05] tracking-tight text-white drop-shadow-md sm:mt-5 sm:text-5xl lg:text-[3.25rem]">
             {SITE_CONFIG.name}{' '}
             <span className="text-white/80">blog</span>
@@ -310,20 +296,6 @@ function EditorialHome({ primaryTask, articlePosts }: { primaryTask?: EnabledTas
           </figure>
         </div>
       </section>
-
-      <nav aria-label="Article topics" className="sticky top-16 z-30 border-b border-slate-200/90 bg-[#f3f4f6]/95 backdrop-blur-md sm:top-20">
-        <div className="mx-auto flex max-w-7xl items-center gap-3 overflow-x-auto px-4 py-2.5 [scrollbar-width:none] sm:gap-5 sm:px-6 sm:py-3.5 lg:px-8">
-          {topicRow.map((item) => (
-            <Link
-              key={item.label}
-              href={item.href}
-              className="shrink-0 rounded-full border border-transparent bg-white/70 px-3 py-1.5 text-xs font-semibold text-slate-600 transition hover:border-indigo-100 hover:text-indigo-700 sm:bg-transparent sm:px-0 sm:py-0 sm:text-sm"
-            >
-              {item.label}
-            </Link>
-          ))}
-        </div>
-      </nav>
 
       <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
         <div className="flex flex-wrap items-end justify-between gap-4 border-b border-slate-200/80 pb-6">
